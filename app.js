@@ -1,7 +1,7 @@
 import { CONFIG } from './config.js';
 import { buildVCard } from './vcard.js';
 import {
-  computeStats, sortByTimestampDesc, isHoneypotTriggered, validateReviewInput,
+  computeStats, sortByTimestampDesc, isHoneypotTriggered, validateReviewInput, validateReferralInput,
 } from './reviews.js';
 
 document.getElementById('call-btn').addEventListener('click', () => {
@@ -156,4 +156,50 @@ reviewForm.addEventListener('submit', async (e) => {
     reviewStatus.classList.add('error');
   }
   reviewStatus.hidden = false;
+});
+
+const referralForm = document.getElementById('referral-form');
+const referralStatus = document.getElementById('referral-status');
+
+referralForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const data = {
+    type: 'referral',
+    referrerName: document.getElementById('referrer-name').value,
+    friendName: document.getElementById('friend-name').value,
+    friendPhone: document.getElementById('friend-phone').value,
+    consent: document.getElementById('referral-consent').checked,
+    website: document.getElementById('referral-website').value,
+  };
+
+  referralStatus.classList.remove('error');
+
+  if (isHoneypotTriggered(data)) {
+    referralStatus.textContent = 'Благодаря! Ще се свържем с приятеля ти.';
+    referralStatus.hidden = false;
+    referralForm.reset();
+    return;
+  }
+
+  const result = validateReferralInput(data);
+  if (!result.valid) {
+    referralStatus.textContent = result.error;
+    referralStatus.classList.add('error');
+    referralStatus.hidden = false;
+    return;
+  }
+
+  try {
+    await fetch(CONFIG.appsScriptUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(data),
+    });
+    referralStatus.textContent = 'Благодаря! Ще се свържем с приятеля ти.';
+    referralForm.reset();
+  } catch (err) {
+    referralStatus.textContent = 'Нещо се обърка. Опитай отново по-късно.';
+    referralStatus.classList.add('error');
+  }
+  referralStatus.hidden = false;
 });

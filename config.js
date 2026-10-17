@@ -3,5 +3,5 @@ export const CONFIG = {
   email: 'mihailgrebenarov@gmail.com',
   viberPhone: '+359896270674',
   whatsappPhone: '+359896270674',
-  appsScriptUrl: 'ЗАМЕНИ_СЛЕД_ПУБЛИКУВАНЕ_НА_APPS_SCRIPT',
+  appsScriptUrl: 'https://script.google.com/macros/s/AKfycbwVUDCiXSva27IH2OgN4SAwEUKMEIHgVih_qEZV48bbT9TtfQG34Zr8xBo-dCQdWCpJsw/exec',
 };

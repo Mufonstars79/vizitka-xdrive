@@ -1,6 +1,8 @@
 import { CONFIG } from './config.js';
 import { buildVCard } from './vcard.js';
-import { computeStats, sortByTimestampDesc } from './reviews.js';
+import {
+  computeStats, sortByTimestampDesc, isHoneypotTriggered, validateReviewInput,
+} from './reviews.js';
 
 document.getElementById('call-btn').addEventListener('click', () => {
   window.location.href = `tel:${CONFIG.phone}`;
@@ -93,3 +95,65 @@ async function loadReviews() {
 }
 
 loadReviews();
+
+let selectedRating = 0;
+
+document.querySelectorAll('#star-picker .star').forEach((starBtn) => {
+  starBtn.addEventListener('click', () => {
+    selectedRating = Number(starBtn.dataset.value);
+    document.getElementById('review-rating').value = selectedRating;
+    document.querySelectorAll('#star-picker .star').forEach((s) => {
+      s.classList.toggle('selected', Number(s.dataset.value) <= selectedRating);
+    });
+  });
+});
+
+const reviewForm = document.getElementById('review-form');
+const reviewStatus = document.getElementById('review-status');
+
+reviewForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const data = {
+    type: 'review',
+    name: document.getElementById('review-name').value,
+    category: document.getElementById('review-category').value,
+    period: document.getElementById('review-period').value,
+    rating: document.getElementById('review-rating').value,
+    text: document.getElementById('review-text').value,
+    consent: document.getElementById('review-consent').checked,
+    website: document.getElementById('review-website').value,
+  };
+
+  reviewStatus.classList.remove('error');
+
+  if (isHoneypotTriggered(data)) {
+    reviewStatus.textContent = 'Благодаря! Отзивът ти чака одобрение.';
+    reviewStatus.hidden = false;
+    reviewForm.reset();
+    return;
+  }
+
+  const result = validateReviewInput(data);
+  if (!result.valid) {
+    reviewStatus.textContent = result.error;
+    reviewStatus.classList.add('error');
+    reviewStatus.hidden = false;
+    return;
+  }
+
+  try {
+    await fetch(CONFIG.appsScriptUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(data),
+    });
+    reviewStatus.textContent = 'Благодаря! Отзивът ти чака одобрение.';
+    reviewForm.reset();
+    selectedRating = 0;
+    document.querySelectorAll('#star-picker .star').forEach((s) => s.classList.remove('selected'));
+  } catch (err) {
+    reviewStatus.textContent = 'Нещо се обърка. Опитай отново по-късно.';
+    reviewStatus.classList.add('error');
+  }
+  reviewStatus.hidden = false;
+});

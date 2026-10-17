@@ -64,6 +64,10 @@ main { max-width: 480px; margin: 0 auto; display: flex; flex-direction: column; 
 .hero .role { color: var(--muted); font-size: 0.95rem; margin-top: 2px; }
 .hero .org { font-weight: 700; color: var(--primary); margin-top: 4px; }
 .hero .intro { margin-top: 10px; font-size: 0.92rem; line-height: 1.5; }
+.phone-display {
+  display: inline-block; margin-top: 6px; color: var(--primary);
+  font-weight: 700; font-size: 1.05rem; text-decoration: none;
+}
 
 .contact-grid {
   display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;

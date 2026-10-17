@@ -9,6 +9,10 @@ document.getElementById('call-btn').addEventListener('click', () => {
   window.location.href = `tel:${CONFIG.phone}`;
 });
 
+const phoneDisplay = document.getElementById('phone-display');
+phoneDisplay.textContent = `📞 ${CONFIG.phone}`;
+phoneDisplay.href = `tel:${CONFIG.phone}`;
+
 document.getElementById('viber-btn').addEventListener('click', () => {
   window.location.href = `viber://chat?number=${encodeURIComponent(CONFIG.viberPhone)}`;
 });

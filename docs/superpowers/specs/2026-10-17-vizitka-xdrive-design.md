@@ -33,7 +33,7 @@ export const CONFIG = {
 
 - `images/foto-1-portret.jpg` — портрет (с елек/пуловер и значка на знамето), **използва се и като кръгъл профилен аватар в hero секцията, и като първа снимка в галерията**.
 - `images/foto-2-kolata.jpg` — служебната кола с брандинг на xDrive.
-- `images/foto-3-placeholder.jpg`, `images/foto-4-placeholder.jpg` — временни placeholder изображения (прост SVG/градиент с надпис "Снимка предстои"), ще се заменят от потребителя по-късно със същото име на файла.
+- `images/foto-3-placeholder.svg`, `images/foto-4-placeholder.svg` — временни placeholder изображения (прост SVG/градиент с надпис "Снимка предстои"), ще се заменят от потребителя по-късно (или просто с нов файл + смяна на `src` в `index.html`).
 
 Секция "Снимки" показва всичките 4 в responsive грид, по реда: 1 (портрет), 2 (колата), 3, 4.
 
@@ -49,8 +49,8 @@ vizitka-xdrive/
 ├── images/
 │   ├── foto-1-portret.jpg
 │   ├── foto-2-kolata.jpg
-│   ├── foto-3-placeholder.jpg
-│   ├── foto-4-placeholder.jpg
+│   ├── foto-3-placeholder.svg
+│   ├── foto-4-placeholder.svg
 │   └── og-image.png        — Open Graph preview картинка
 ├── qr-code.png             — генериран накрая, сочи към финалния GitHub Pages URL
 ├── apps-script.gs          — Google Apps Script (качва се ръчно в Sheet, не се деплойва от repo-то)

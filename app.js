@@ -3,6 +3,7 @@ import { buildVCard } from './vcard.js';
 import {
   computeStats, sortByTimestampDesc, isHoneypotTriggered, validateReviewInput, validateReferralInput,
 } from './reviews.js';
+import { buildShareText, buildShareLinks } from './share.js';
 
 document.getElementById('call-btn').addEventListener('click', () => {
   window.location.href = `tel:${CONFIG.phone}`;
@@ -202,4 +203,38 @@ referralForm.addEventListener('submit', async (e) => {
     referralStatus.classList.add('error');
   }
   referralStatus.hidden = false;
+});
+
+const shareBtn = document.getElementById('share-btn');
+const shareFallback = document.getElementById('share-fallback');
+const copyLinkBtn = document.getElementById('copy-link-btn');
+
+const pageUrl = window.location.href;
+const shareText = buildShareText({ fullName: 'Михаил Гребенаров', org: 'xDrive' });
+const shareLinks = buildShareLinks(pageUrl, shareText);
+
+document.getElementById('share-viber').href = shareLinks.viber;
+document.getElementById('share-whatsapp').href = shareLinks.whatsapp;
+document.getElementById('share-facebook').href = shareLinks.facebook;
+
+shareBtn.addEventListener('click', async () => {
+  if (navigator.share) {
+    try {
+      await navigator.share({ title: 'xDrive — Михаил Гребенаров', text: shareText, url: pageUrl });
+      return;
+    } catch (err) {
+      // потребителят е отказал или е възникнала грешка – показваме резервния вариант
+    }
+  }
+  shareFallback.hidden = false;
+});
+
+copyLinkBtn.addEventListener('click', async () => {
+  try {
+    await navigator.clipboard.writeText(pageUrl);
+    copyLinkBtn.textContent = 'Копирано!';
+    setTimeout(() => { copyLinkBtn.textContent = 'Копирай линк'; }, 2000);
+  } catch (err) {
+    // clipboard недостъпен на този браузър – бутоните за Viber/WhatsApp/Facebook остават работещи
+  }
 });

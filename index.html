@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Михаил Гребенаров — Автоинструктор xDrive</title>
+  <meta name="description" content="Автоинструктор категория B във фирма xDrive. Обучение, допълнителни часове, подготовка за изпит и опреснителни курсове." />
+  <meta property="og:title" content="Михаил Гребенаров — Автоинструктор xDrive" />
+  <meta property="og:description" content="Автоинструктор категория B във фирма xDrive. Запази контакт, прегледай отзиви и се запиши за час." />
+  <meta property="og:image" content="images/og-image.png" />
+  <meta property="og:type" content="profile" />
+  <meta name="theme-color" content="#1f5fae" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <img class="avatar" src="images/foto-1-portret.jpg" alt="Михаил Гребенаров" />
+      <h1>Михаил Гребенаров</h1>
+      <div class="role">Автоинструктор</div>
+      <div class="org">xDrive</div>
+      <p class="intro">
+        [ТУК РЕДАКТИРАЙ: 2–3 изречения за себе си — опит, подход към обучението, защо да изберат теб.]
+      </p>
+    </section>
+
+    <div class="contact-grid">
+      <button id="call-btn" class="btn">📞 Обади се</button>
+      <button id="viber-btn" class="btn">💬 Viber</button>
+      <button id="whatsapp-btn" class="btn">🟢 WhatsApp</button>
+      <button id="email-btn" class="btn">✉️ Имейл</button>
+    </div>
+
+    <button id="book-btn" class="btn btn-primary btn-wide">📅 Запиши се за час</button>
+    <button id="save-contact-btn" class="btn btn-wide">👤 Запази контакта</button>
+
+    <section>
+      <h2>Какво предлагам</h2>
+      <ul class="services-list">
+        <li>Обучение категория B</li>
+        <li>Допълнителни часове</li>
+        <li>Подготовка за изпит</li>
+        <li>Опреснителни курсове за шофьори с книжка</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Снимки</h2>
+      <div class="gallery">
+        <img src="images/foto-1-portret.jpg" alt="Михаил Гребенаров" />
+        <img src="images/foto-2-kolata.jpg" alt="Служебният автомобил на xDrive" />
+        <img src="images/foto-3-placeholder.svg" alt="Снимка предстои" />
+        <img src="images/foto-4-placeholder.svg" alt="Снимка предстои" />
+      </div>
+    </section>
+
+    <section id="reviews-section">
+      <h2>Отзиви</h2>
+      <div id="reviews-summary" class="reviews-summary" hidden></div>
+      <div id="reviews-empty" class="empty-state">Бъди първият, който ще остави отзив.</div>
+      <div id="reviews-list"></div>
+
+      <form id="review-form">
+        <label for="review-name">Име</label>
+        <input id="review-name" type="text" maxlength="60" required />
+
+        <label for="review-category">Категория</label>
+        <input id="review-category" type="text" maxlength="20" placeholder="напр. B" required />
+
+        <label for="review-period">Месец/година на обучение</label>
+        <input id="review-period" type="text" maxlength="20" placeholder="напр. 09.2026" required />
+
+        <label>Оценка</label>
+        <div class="star-picker" id="star-picker">
+          <span class="star" data-value="1">★</span>
+          <span class="star" data-value="2">★</span>
+          <span class="star" data-value="3">★</span>
+          <span class="star" data-value="4">★</span>
+          <span class="star" data-value="5">★</span>
+        </div>
+        <input type="hidden" id="review-rating" value="0" />
+
+        <label for="review-text">Отзив</label>
+        <textarea id="review-text" maxlength="500" required></textarea>
+
+        <div class="checkbox-row">
+          <input type="checkbox" id="review-consent" />
+          <label for="review-consent">Съгласен съм отзивът да бъде публикуван на сайта.</label>
+        </div>
+
+        <div class="honeypot-field">
+          <label for="review-website">Website</label>
+          <input type="text" id="review-website" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-wide">Изпрати отзив</button>
+        <p id="review-status" class="form-status" hidden></p>
+      </form>
+    </section>
+
+    <section>
+      <h2>Препоръчай ме</h2>
+      <button id="share-btn" class="btn btn-primary btn-wide">📤 Сподели визитката</button>
+      <div id="share-fallback" class="share-fallback" hidden>
+        <button id="copy-link-btn" class="btn btn-wide">Копирай линк</button>
+        <a id="share-viber" class="btn btn-wide" href="#">Сподели във Viber</a>
+        <a id="share-whatsapp" class="btn btn-wide" href="#">Сподели в WhatsApp</a>
+        <a id="share-facebook" class="btn btn-wide" href="#">Сподели във Facebook</a>
+      </div>
+    </section>
+
+    <section>
+      <h2>Препоръчай приятел</h2>
+      <form id="referral-form">
+        <label for="referrer-name">Твоето име</label>
+        <input id="referrer-name" type="text" maxlength="60" required />
+
+        <label for="friend-name">Име на приятеля</label>
+        <input id="friend-name" type="text" maxlength="60" required />
+
+        <label for="friend-phone">Телефон на приятеля</label>
+        <input id="friend-phone" type="tel" maxlength="30" required />
+
+        <div class="checkbox-row">
+          <input type="checkbox" id="referral-consent" />
+          <label for="referral-consent">Приятелят е съгласен да бъде потърсен.</label>
+        </div>
+
+        <div class="honeypot-field">
+          <label for="referral-website">Website</label>
+          <input type="text" id="referral-website" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-wide">Изпрати препоръка</button>
+        <p id="referral-status" class="form-status" hidden></p>
+      </form>
+    </section>
+
+    <footer>
+      <p>© 2026 xDrive · <a href="privacy.html">Поверителност</a></p>
+    </footer>
+  </main>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

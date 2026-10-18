@@ -18,13 +18,25 @@ function doGet(e) {
     .map((r) => ({
       name: r.name,
       category: r.category,
-      period: r.period,
+      period: formatPeriod(r.period),
       rating: r.rating,
       text: r.text,
       timestamp: r.timestamp,
     }))
     .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
   return jsonResponse(approved);
+}
+
+// Google Sheets sometimes auto-converts a typed value like "10.2026" into a
+// real Date. If that happened (on older rows), show it back as "MM.YYYY"
+// instead of a raw timestamp.
+function formatPeriod(value) {
+  if (Object.prototype.toString.call(value) === '[object Date]') {
+    const month = String(value.getMonth() + 1).padStart(2, '0');
+    const year = value.getFullYear();
+    return month + '.' + year;
+  }
+  return value;
 }
 
 function doPost(e) {
@@ -78,6 +90,10 @@ function appendReview(data) {
     Boolean(data.consent),
     autoApproved,
   ]);
+  // Google Sheets auto-detects values like "10.2026" as dates; force this
+  // cell back to plain text so it stores and displays exactly what was typed.
+  const periodColumn = 5;
+  sheet.getRange(sheet.getLastRow(), periodColumn).setNumberFormat('@').setValue(data.period);
   notifyNewReview(data, autoApproved);
 }
 

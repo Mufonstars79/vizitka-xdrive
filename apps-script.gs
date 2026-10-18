@@ -4,6 +4,10 @@ const REFERRALS_SHEET = 'Referrals';
 const MAX_TEXT_LENGTH = 500;
 const NOTIFY_EMAIL = 'mihailgrebenarov@gmail.com';
 
+function testMail() {
+  MailApp.sendEmail(NOTIFY_EMAIL, 'Тест', 'Това е тестов имейл от Apps Script.');
+}
+
 function doGet(e) {
   const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName(REVIEWS_SHEET);
   const rows = sheet.getDataRange().getValues();

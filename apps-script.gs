@@ -62,8 +62,11 @@ function isValidReferral(data) {
   return true;
 }
 
+const AUTO_APPROVE_MIN_RATING = 4;
+
 function appendReview(data) {
   const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName(REVIEWS_SHEET);
+  const autoApproved = Number(data.rating) >= AUTO_APPROVE_MIN_RATING;
   sheet.appendRow([
     new Date().toISOString(),
     Utilities.getUuid(),
@@ -73,9 +76,9 @@ function appendReview(data) {
     Number(data.rating),
     data.text,
     Boolean(data.consent),
-    false,
+    autoApproved,
   ]);
-  notifyNewReview(data);
+  notifyNewReview(data, autoApproved);
 }
 
 function appendReferral(data) {
@@ -91,17 +94,22 @@ function appendReferral(data) {
   notifyNewReferral(data);
 }
 
-function notifyNewReview(data) {
+function notifyNewReview(data, autoApproved) {
+  const statusLine = autoApproved
+    ? 'Оценката е ' + data.rating + '★, затова отзивът вече е публикуван автоматично на сайта.'
+    : 'Оценката е ' + data.rating + '★ — отзивът чака твоето одобрение в Google Sheet, преди да се покаже.';
   MailApp.sendEmail({
     to: NOTIFY_EMAIL,
-    subject: 'Нов отзив чака одобрение — Xdrive визитка',
-    body: 'Нов отзив беше изпратен и чака одобрение:\n\n'
+    subject: autoApproved
+      ? 'Нов отзив (публикуван автоматично) — Xdrive визитка'
+      : 'Нов отзив чака одобрение — Xdrive визитка',
+    body: statusLine + '\n\n'
       + 'Име: ' + data.name + '\n'
       + 'Категория: ' + data.category + '\n'
       + 'Период: ' + data.period + '\n'
       + 'Оценка: ' + data.rating + '/5\n'
       + 'Текст: ' + data.text + '\n\n'
-      + 'Одобри го в Google Sheet, таб Reviews (колона "approved").',
+      + 'Виж/коригирай в Google Sheet, таб Reviews.',
   });
 }
 

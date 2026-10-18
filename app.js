@@ -26,10 +26,6 @@ document.getElementById('email-btn').addEventListener('click', () => {
   window.location.href = `mailto:${CONFIG.email}`;
 });
 
-document.getElementById('book-btn').addEventListener('click', () => {
-  window.location.href = `viber://chat?number=${encodeURIComponent(CONFIG.viberPhone)}`;
-});
-
 document.getElementById('save-contact-btn').addEventListener('click', () => {
   const vcf = buildVCard({
     fullName: 'Михаил Гребенаров',

@@ -90,7 +90,7 @@ function appendReferral(data) {
 function notifyNewReview(data) {
   MailApp.sendEmail({
     to: NOTIFY_EMAIL,
-    subject: 'Нов отзив чака одобрение — xDrive визитка',
+    subject: 'Нов отзив чака одобрение — Xdrive визитка',
     body: 'Нов отзив беше изпратен и чака одобрение:\n\n'
       + 'Име: ' + data.name + '\n'
       + 'Категория: ' + data.category + '\n'
@@ -104,7 +104,7 @@ function notifyNewReview(data) {
 function notifyNewReferral(data) {
   MailApp.sendEmail({
     to: NOTIFY_EMAIL,
-    subject: 'Нова препоръка на приятел — xDrive визитка',
+    subject: 'Нова препоръка на приятел — Xdrive визитка',
     body: data.referrerName + ' препоръча приятел:\n\n'
       + 'Име на приятеля: ' + data.friendName + '\n'
       + 'Телефон: ' + data.friendPhone + '\n\n'

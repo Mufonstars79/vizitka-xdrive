@@ -29,7 +29,7 @@ document.getElementById('email-btn').addEventListener('click', () => {
 document.getElementById('save-contact-btn').addEventListener('click', () => {
   const vcf = buildVCard({
     fullName: 'Михаил Гребенаров',
-    org: 'xDrive',
+    org: 'Xdrive',
     title: 'Автоинструктор',
     phone: CONFIG.phone,
     email: CONFIG.email,
@@ -210,7 +210,7 @@ const shareFallback = document.getElementById('share-fallback');
 const copyLinkBtn = document.getElementById('copy-link-btn');
 
 const pageUrl = window.location.href;
-const shareText = buildShareText({ fullName: 'Михаил Гребенаров', org: 'xDrive' });
+const shareText = buildShareText({ fullName: 'Михаил Гребенаров', org: 'Xdrive' });
 const shareLinks = buildShareLinks(pageUrl, shareText);
 
 document.getElementById('share-viber').href = shareLinks.viber;
@@ -220,7 +220,7 @@ document.getElementById('share-facebook').href = shareLinks.facebook;
 shareBtn.addEventListener('click', async () => {
   if (navigator.share) {
     try {
-      await navigator.share({ title: 'xDrive — Михаил Гребенаров', text: shareText, url: pageUrl });
+      await navigator.share({ title: 'Xdrive — Михаил Гребенаров', text: shareText, url: pageUrl });
       return;
     } catch (err) {
       // потребителят е отказал или е възникнала грешка – показваме резервния вариант

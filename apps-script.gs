@@ -2,6 +2,7 @@ const SHEET_ID = 'ЗАМЕНИ_С_ID_НА_ТВОЯ_GOOGLE_SHEET';
 const REVIEWS_SHEET = 'Reviews';
 const REFERRALS_SHEET = 'Referrals';
 const MAX_TEXT_LENGTH = 500;
+const NOTIFY_EMAIL = 'mihailgrebenarov@gmail.com';
 
 function doGet(e) {
   const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName(REVIEWS_SHEET);
@@ -70,6 +71,7 @@ function appendReview(data) {
     Boolean(data.consent),
     false,
   ]);
+  notifyNewReview(data);
 }
 
 function appendReferral(data) {
@@ -82,6 +84,32 @@ function appendReferral(data) {
     data.friendPhone,
     Boolean(data.consent),
   ]);
+  notifyNewReferral(data);
+}
+
+function notifyNewReview(data) {
+  MailApp.sendEmail({
+    to: NOTIFY_EMAIL,
+    subject: 'Нов отзив чака одобрение — xDrive визитка',
+    body: 'Нов отзив беше изпратен и чака одобрение:\n\n'
+      + 'Име: ' + data.name + '\n'
+      + 'Категория: ' + data.category + '\n'
+      + 'Период: ' + data.period + '\n'
+      + 'Оценка: ' + data.rating + '/5\n'
+      + 'Текст: ' + data.text + '\n\n'
+      + 'Одобри го в Google Sheet, таб Reviews (колона "approved").',
+  });
+}
+
+function notifyNewReferral(data) {
+  MailApp.sendEmail({
+    to: NOTIFY_EMAIL,
+    subject: 'Нова препоръка на приятел — xDrive визитка',
+    body: data.referrerName + ' препоръча приятел:\n\n'
+      + 'Име на приятеля: ' + data.friendName + '\n'
+      + 'Телефон: ' + data.friendPhone + '\n\n'
+      + 'Виж в Google Sheet, таб Referrals.',
+  });
 }
 
 function toObject(headers, row) {

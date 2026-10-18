@@ -13,6 +13,19 @@ const phoneDisplay = document.getElementById('phone-display');
 phoneDisplay.textContent = `📞 ${CONFIG.phone}`;
 phoneDisplay.href = `tel:${CONFIG.phone}`;
 
+const emailDisplay = document.getElementById('email-display');
+const emailDisplayDefaultText = `✉️ ${CONFIG.email}`;
+emailDisplay.textContent = emailDisplayDefaultText;
+emailDisplay.addEventListener('click', async () => {
+  try {
+    await navigator.clipboard.writeText(CONFIG.email);
+    emailDisplay.textContent = 'Имейлът е копиран!';
+    setTimeout(() => { emailDisplay.textContent = emailDisplayDefaultText; }, 2000);
+  } catch (err) {
+    // clipboard недостъпен на този браузър – имейлът остава видим за ръчно копиране
+  }
+});
+
 document.getElementById('viber-btn').addEventListener('click', () => {
   window.location.href = `viber://chat?number=${encodeURIComponent(CONFIG.viberPhone)}`;
 });

@@ -65,8 +65,9 @@ main { max-width: 480px; margin: 0 auto; display: flex; flex-direction: column; 
 .hero .org { font-weight: 700; color: var(--primary); margin-top: 4px; }
 .hero .intro { margin-top: 10px; font-size: 0.92rem; line-height: 1.5; }
 .phone-display {
-  display: inline-block; margin-top: 6px; color: var(--primary);
+  display: inline-block; margin: 6px 6px 0; color: var(--primary);
   font-weight: 700; font-size: 1.05rem; text-decoration: none;
+  background: none; border: none; font-family: inherit; cursor: pointer; padding: 0;
 }
 
 .contact-grid {

@@ -3,7 +3,7 @@ const REVIEWS_SHEET = 'Reviews';
 const REFERRALS_SHEET = 'Referrals';
 const MAX_TEXT_LENGTH = 500;
 const NOTIFY_EMAIL = 'mihailgrebenarov@gmail.com';
-const GALLERY_FOLDER_ID = 'ЗАМЕНИ_С_ID_НА_GOOGLE_DRIVE_ПАПКАТА';
+const GALLERY_FOLDER_ID = '1yoeaGMHqNbWb904Lt7xp4bPuDlCsMv0T';
 
 function testMail() {
   MailApp.sendEmail(NOTIFY_EMAIL, 'Тест', 'Това е тестов имейл от Apps Script.');

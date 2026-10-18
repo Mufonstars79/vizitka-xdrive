@@ -238,3 +238,50 @@ copyLinkBtn.addEventListener('click', async () => {
     // clipboard недостъпен на този браузър – бутоните за Viber/WhatsApp/Facebook остават работещи
   }
 });
+
+// ---- Галерия: лайтбокс за увеличаване + допълнителни снимки от Google Drive ----
+const galleryEl = document.getElementById('gallery');
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+const lightboxClose = document.getElementById('lightbox-close');
+
+function openLightbox(src, alt) {
+  lightboxImg.src = src;
+  lightboxImg.alt = alt;
+  lightbox.hidden = false;
+}
+
+function closeLightbox() {
+  lightbox.hidden = true;
+  lightboxImg.src = '';
+}
+
+function attachLightboxHandlers(img) {
+  img.addEventListener('click', () => openLightbox(img.src, img.alt));
+}
+
+galleryEl.querySelectorAll('img').forEach(attachLightboxHandlers);
+
+lightboxClose.addEventListener('click', closeLightbox);
+lightbox.addEventListener('click', (e) => {
+  if (e.target === lightbox) closeLightbox();
+});
+
+async function loadDriveGallery() {
+  try {
+    const res = await fetch(`${CONFIG.appsScriptUrl}?type=gallery`);
+    const photos = await res.json();
+    photos.forEach((photo) => {
+      const img = document.createElement('img');
+      img.src = photo.url;
+      img.alt = 'Михаил Гребенаров';
+      img.loading = 'lazy';
+      attachLightboxHandlers(img);
+      galleryEl.appendChild(img);
+    });
+  } catch (err) {
+    // Drive галерията не успя да се зареди – статичните снимки си остават видими
+  }
+}
+
+loadDriveGallery();

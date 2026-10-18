@@ -3,12 +3,16 @@ const REVIEWS_SHEET = 'Reviews';
 const REFERRALS_SHEET = 'Referrals';
 const MAX_TEXT_LENGTH = 500;
 const NOTIFY_EMAIL = 'mihailgrebenarov@gmail.com';
+const GALLERY_FOLDER_ID = 'ЗАМЕНИ_С_ID_НА_GOOGLE_DRIVE_ПАПКАТА';
 
 function testMail() {
   MailApp.sendEmail(NOTIFY_EMAIL, 'Тест', 'Това е тестов имейл от Apps Script.');
 }
 
 function doGet(e) {
+  if (e.parameter.type === 'gallery') {
+    return jsonResponse(getGalleryPhotos());
+  }
   const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName(REVIEWS_SHEET);
   const rows = sheet.getDataRange().getValues();
   const headers = rows[0];
@@ -37,6 +41,22 @@ function formatPeriod(value) {
     return month + '.' + year;
   }
   return value;
+}
+
+function getGalleryPhotos() {
+  const folder = DriveApp.getFolderById(GALLERY_FOLDER_ID);
+  const files = folder.getFiles();
+  const photos = [];
+  while (files.hasNext()) {
+    const file = files.next();
+    if (file.getMimeType().indexOf('image/') !== 0) continue;
+    photos.push({
+      url: 'https://lh3.googleusercontent.com/d/' + file.getId() + '=w1000',
+      createdAt: file.getDateCreated().toISOString(),
+    });
+  }
+  photos.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  return photos;
 }
 
 function doPost(e) {

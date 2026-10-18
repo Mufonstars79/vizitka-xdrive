@@ -49,13 +49,18 @@
 
     <section>
       <h2>Снимки</h2>
-      <div class="gallery">
+      <div class="gallery" id="gallery">
         <img src="images/foto-1-portret.jpg" alt="Михаил Гребенаров" />
         <img src="images/foto-2-kolata.jpg" alt="Служебният автомобил на Xdrive" />
         <img src="images/foto-3-instruktor.jpg" alt="Михаил Гребенаров" />
         <img src="images/foto-4-sako.jpg" alt="Михаил Гребенаров" />
       </div>
     </section>
+
+    <div id="lightbox" class="lightbox" hidden>
+      <button id="lightbox-close" class="lightbox-close" aria-label="Затвори">✕</button>
+      <img id="lightbox-img" src="" alt="" />
+    </div>
 
     <section id="reviews-section">
       <h2>Отзиви</h2>

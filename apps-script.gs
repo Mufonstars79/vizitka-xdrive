@@ -9,6 +9,10 @@ function testMail() {
   MailApp.sendEmail(NOTIFY_EMAIL, 'Тест', 'Това е тестов имейл от Apps Script.');
 }
 
+function testGallery() {
+  Logger.log(getGalleryPhotos());
+}
+
 function doGet(e) {
   if (e.parameter.type === 'gallery') {
     return jsonResponse(getGalleryPhotos());

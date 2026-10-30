@@ -149,13 +149,13 @@ footer a { color: var(--muted); }
 }
 .social-icon {
   display: flex; align-items: center; justify-content: center;
-  width: 40px; height: 40px; border-radius: 50%;
-  background: var(--card-bg); border: 1px solid var(--border); color: var(--muted);
-  transition: color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+  width: 56px; height: 56px; border-radius: 50%;
+  background: var(--primary); border: 1px solid var(--primary); color: var(--primary-text);
+  transition: filter 0.15s ease, transform 0.15s ease;
 }
-.social-icon svg { width: 20px; height: 20px; fill: currentColor; }
+.social-icon svg { width: 28px; height: 28px; fill: currentColor; }
 .social-icon:hover, .social-icon:focus-visible {
-  color: var(--primary); border-color: var(--primary); transform: translateY(-2px);
+  filter: brightness(1.12); transform: translateY(-2px);
 }
 
 [hidden] { display: none !important; }
